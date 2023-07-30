@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: RestaurantApplication
+  profiles:
+    active: local
+app:
+  name: RestaurantApplication
+  description: Spring boot application with data bas access.
+info:
+  title: RestaurantApplication
+  version: '@project.version@'
