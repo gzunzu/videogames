@@ -4,8 +4,8 @@ spring:
   profiles:
     active: local
 app:
-  name: RestaurantApplication
+  name: VideoGamesApplication
   description: Spring boot application with data bas access.
 info:
-  title: RestaurantApplication
+  title: VideoGamesApplication
   version: '@project.version@'
