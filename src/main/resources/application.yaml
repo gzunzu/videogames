@@ -3,9 +3,17 @@ spring:
     name: RestaurantApplication
   profiles:
     active: local
+  datasource:
+    url: jdbc:h2:file:./data/videogames;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+    driver-class-name: org.h2.Driver
+    username: test
+    password: test123
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: true
 app:
   name: VideoGamesApplication
-  description: Spring boot application with data bas access.
+  description: Spring boot application with data base access.
 info:
   title: VideoGamesApplication
   version: '@project.version@'

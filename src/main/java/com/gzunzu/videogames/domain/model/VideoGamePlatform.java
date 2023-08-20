@@ -15,41 +15,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "NOMINATION")
-public class Nomination implements Serializable {
-    private static final long serialVersionUID = -4909214543775405529L;
+@Table(name = "VIDEOGAME_PLATFORM")
+public class VideoGamePlatform implements Serializable {
+    private static final long serialVersionUID = -3269595842608257225L;
 
     @Id
-    @SequenceGenerator(name = "nomination_id_sequence",
-            sequenceName = "nomination_id_sequence")
+    @SequenceGenerator(name = "videogame_platform_id_sequence",
+            sequenceName = "videogame_platform_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "nomination_id_sequence")
+            generator = "videogame_platform_id_sequence")
     @JsonIgnore
     private long id;
-
-    @ManyToOne
-    @JoinColumn(name = "FK_AWARD_CATEGORY", referencedColumnName = "ID")
-    @JsonManagedReference
-    private AwardCategory category;
 
     @ManyToOne
     @JoinColumn(name = "FK_VIDEOGAME", referencedColumnName = "ID")
     @JsonBackReference
     private VideoGame videoGame;
 
-    private Boolean win;
-
-    private LocalDate date;
-
-    public Nomination(AwardCategory category, VideoGame videoGame, Boolean win, LocalDate date) {
-        this.category = category;
-        this.videoGame = videoGame;
-        this.win = win;
-        this.date = date;
-    }
+    @ManyToOne
+    @JoinColumn(name = "FK_PLATFORM", referencedColumnName = "ID")
+    @JsonManagedReference
+    private Platform platform;
 }
