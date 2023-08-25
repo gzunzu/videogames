@@ -7,10 +7,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -43,20 +47,32 @@ public class VideoGame implements Serializable {
 
     private boolean multiplayer;
 
-    @OneToMany(targetEntity = VideoGameGenre.class, mappedBy = "videoGame")
-    @JsonManagedReference
+    @JoinTable(
+            name = "VIDEOGAME_GENRE",
+            joinColumns = @JoinColumn(name = "FK_VIDEOGAME", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "FK_GENRE", nullable = false)
+    )
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Genre> genres;
 
     @OneToMany(targetEntity = Nomination.class, mappedBy = "videoGame")
     @JsonManagedReference
     private List<Nomination> nominations;
 
-    @OneToMany(targetEntity = VideoGameDeveloper.class, mappedBy = "videoGame")
-    @JsonManagedReference
+    @JoinTable(
+            name = "VIDEOGAME_DEVELOPER",
+            joinColumns = @JoinColumn(name = "FK_VIDEOGAME", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "FK_DEVELOPER", nullable = false)
+    )
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Developer> developers;
 
-    @OneToMany(targetEntity = VideoGamePlatform.class, mappedBy = "videoGame")
-    @JsonManagedReference
+    @JoinTable(
+            name = "VIDEOGAME_PLATFORM",
+            joinColumns = @JoinColumn(name = "FK_VIDEOGAME", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "FK_PLATFORM", nullable = false)
+    )
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Platform> platforms;
 
     public VideoGame(String title, LocalDate releaseDate, List<Genre> genres, List<Nomination> nominations, List<Developer> developers) {

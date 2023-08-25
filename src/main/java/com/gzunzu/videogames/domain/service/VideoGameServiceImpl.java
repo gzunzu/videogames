@@ -1,6 +1,5 @@
 package com.gzunzu.videogames.domain.service;
 
-import com.gzunzu.videogames.domain.model.Genre;
 import com.gzunzu.videogames.domain.model.VideoGame;
 import com.gzunzu.videogames.ports.VideoGameRepository;
 import com.gzunzu.videogames.ports.VideoGameService;
@@ -8,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +20,12 @@ public class VideoGameServiceImpl implements VideoGameService {
     }
 
     @Override
-    public List<VideoGame> getByGenre(final String genre) {
-        final List<VideoGame> videogameList = this.videoGameRepository.findAll();
-        return videogameList.stream()
-                .filter((VideoGame vg) -> vg.getGenres().stream()
-                        .map(Genre::getName)
-                        .anyMatch(genre::equalsIgnoreCase))
-                .collect(Collectors.toList());
+    public VideoGame getByTitle(final String title) {
+        return this.videoGameRepository.findByTitle(title);
+    }
+
+    @Override
+    public List<VideoGame> getByReleaseYear(final int year) {
+        return this.videoGameRepository.findByReleaseYear(year);
     }
 }

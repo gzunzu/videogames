@@ -8,5 +8,7 @@ public interface VideoGameService {
 
     List<VideoGame> getAll();
 
-    List<VideoGame> getByGenre(final String genre);
+    VideoGame getByTitle(final String title);
+
+    List<VideoGame> getByReleaseYear(final int year);
 }
