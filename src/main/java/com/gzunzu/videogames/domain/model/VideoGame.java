@@ -1,7 +1,5 @@
 package com.gzunzu.videogames.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,16 +25,16 @@ import java.util.List;
 @Data
 @Builder
 @Entity
+@SequenceGenerator(name = "VIDEOGAME_ID_GENERATOR",
+        sequenceName = "SEQ_VIDEOGAME_ID",
+        allocationSize = 1)
 @Table(name = "VIDEOGAME")
 public class VideoGame implements Serializable {
     private static final long serialVersionUID = -6077773123799267364L;
 
     @Id
-    @SequenceGenerator(name = "videogame_id_sequence",
-            sequenceName = "videogame_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "videogame_id_sequence")
-    @JsonIgnore
+            generator = "VIDEOGAME_ID_GENERATOR")
     private long id;
 
     private String title;
@@ -56,7 +54,6 @@ public class VideoGame implements Serializable {
     private List<Genre> genres;
 
     @OneToMany(targetEntity = Nomination.class, mappedBy = "videoGame")
-    @JsonManagedReference
     private List<Nomination> nominations;
 
     @JoinTable(
@@ -74,12 +71,4 @@ public class VideoGame implements Serializable {
     )
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Platform> platforms;
-
-    public VideoGame(String title, LocalDate releaseDate, List<Genre> genres, List<Nomination> nominations, List<Developer> developers) {
-        this.title = title;
-        this.releaseDate = releaseDate;
-        this.genres = genres;
-        this.nominations = nominations;
-        this.developers = developers;
-    }
 }

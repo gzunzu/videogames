@@ -1,8 +1,7 @@
 package com.gzunzu.videogames.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,38 +17,31 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 @Entity
+@SequenceGenerator(name = "NOMINATION_ID_GENERATOR",
+        sequenceName = "SEQ_NOMINATION_ID",
+        allocationSize = 1)
 @Table(name = "NOMINATION")
 public class Nomination implements Serializable {
     private static final long serialVersionUID = -4909214543775405529L;
 
     @Id
-    @SequenceGenerator(name = "nomination_id_sequence",
-            sequenceName = "nomination_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "nomination_id_sequence")
-    @JsonIgnore
+            generator = "NOMINATION_ID_GENERATOR")
     private long id;
 
     @ManyToOne
     @JoinColumn(name = "FK_AWARD_CATEGORY", referencedColumnName = "ID")
-    @JsonManagedReference
     private AwardCategory category;
 
     @ManyToOne
     @JoinColumn(name = "FK_VIDEOGAME", referencedColumnName = "ID")
-    @JsonBackReference
     private VideoGame videoGame;
 
     private Boolean win;
 
     private LocalDate date;
-
-    public Nomination(AwardCategory category, VideoGame videoGame, Boolean win, LocalDate date) {
-        this.category = category;
-        this.videoGame = videoGame;
-        this.win = win;
-        this.date = date;
-    }
 }

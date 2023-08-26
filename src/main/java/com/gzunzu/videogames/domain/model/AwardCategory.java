@@ -1,7 +1,7 @@
 package com.gzunzu.videogames.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,29 +16,25 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 @Entity
+@SequenceGenerator(name = "AWARD_CATEGORY_ID_GENERATOR",
+        sequenceName = "SEQ_AWARD_CATEGORY_ID",
+        allocationSize = 1)
 @Table(name = "AWARD_CATEGORY")
 public class AwardCategory implements Serializable {
     private static final long serialVersionUID = -2157395773693101486L;
 
     @Id
-    @SequenceGenerator(name = "award-category_id_sequence",
-            sequenceName = "award-category_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "award-category_id_sequence")
-    @JsonIgnore
+            generator = "AWARD_CATEGORY_ID_GENERATOR")
     private long id;
 
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "FK_INSTITUTION", referencedColumnName = "ID")
-    @JsonManagedReference
     private AwardInstitution institution;
-
-    public AwardCategory(String name, AwardInstitution institution) {
-        this.name = name;
-        this.institution = institution;
-    }
 }

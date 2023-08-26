@@ -1,6 +1,7 @@
 package com.gzunzu.videogames.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,28 +14,21 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
 @Entity
+@SequenceGenerator(name = "PLATFORM_ID_GENERATOR",
+        sequenceName = "SEQ_PLATFORM_ID",
+        allocationSize = 1)
 @Table(name = "PLATFORM")
 public class Platform implements Serializable {
     private static final long serialVersionUID = -439801473649104836L;
 
     @Id
-    @SequenceGenerator(name = "platform_id_sequence",
-            sequenceName = "platform_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "platform_id_sequence")
-    @JsonIgnore
+            generator = "PLATFORM_ID_GENERATOR")
     private long id;
 
     private String name;
-
-    public Platform(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
 }

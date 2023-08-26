@@ -1,9 +1,9 @@
 package com.gzunzu.videogames.api;
 
-import com.gzunzu.videogames.domain.model.VideoGame;
+import com.gzunzu.common.adapters.api.BaseController;
+import com.gzunzu.videogames.domain.dto.VideoGameDTO;
 import com.gzunzu.videogames.ports.VideoGameService;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,31 +14,52 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "VideoGame controller",
+@RequestMapping(name = "Video games controller",
         path = "api/1.0/videogames",
         produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class VideoGameController {
+public class VideoGameController extends BaseController<VideoGameDTO> {
 
     private final VideoGameService videoGameService;
 
     @GetMapping(name = "Get all video games")
-    public ResponseEntity<List<VideoGame>> getAll() {
-        final List<VideoGame> result = this.videoGameService.getAll();
-        return CollectionUtils.isEmpty(result) ? ResponseEntity.noContent().build() : ResponseEntity.ok(result);
+    public ResponseEntity<List<VideoGameDTO>> getAll() {
+        final List<VideoGameDTO> result = this.videoGameService.getAll();
+        return super.getResponse(result);
     }
 
     @GetMapping(name = "Get a video game by title",
             value = "/{title}")
-    public ResponseEntity<VideoGame> getByTitle(@PathVariable(name = "title") final String title) {
-        final VideoGame result = this.videoGameService.getByTitle(title);
-        return result == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
+    public ResponseEntity<VideoGameDTO> getByTitle(@PathVariable(name = "title") final String title) {
+        final VideoGameDTO result = this.videoGameService.getByTitle(title);
+        return super.getResponse(result);
     }
 
     @GetMapping(name = "Get all video games released during the provided year",
             value = "/year/{year}")
-    public ResponseEntity<List<VideoGame>> getByReleaseYear(@PathVariable(name = "year") final int year) {
-        final List<VideoGame> result = this.videoGameService.getByReleaseYear(year);
-        return CollectionUtils.isEmpty(result) ? ResponseEntity.notFound().build() : ResponseEntity.ok(result);
+    public ResponseEntity<List<VideoGameDTO>> getByReleaseYear(@PathVariable(name = "year") final int year) {
+        final List<VideoGameDTO> result = this.videoGameService.getByReleaseYear(year);
+        return super.getResponse(result);
+    }
+
+    @GetMapping(name = "Get all video games by genre",
+            value = "/genre/{name}")
+    public ResponseEntity<List<VideoGameDTO>> getByGenre(@PathVariable(name = "name") final String name) {
+        final List<VideoGameDTO> result = this.videoGameService.getByGenre(name);
+        return super.getResponse(result);
+    }
+
+    @GetMapping(name = "Get all video games by platform",
+            value = "/platform/{name}")
+    public ResponseEntity<List<VideoGameDTO>> getByPlatform(@PathVariable(name = "name") final String name) {
+        final List<VideoGameDTO> result = this.videoGameService.getByPlatform(name);
+        return super.getResponse(result);
+    }
+
+    @GetMapping(name = "Get all video games by developer",
+            value = "/developer/{name}")
+    public ResponseEntity<List<VideoGameDTO>> getByDeveloper(@PathVariable(name = "name") final String name) {
+        final List<VideoGameDTO> result = this.videoGameService.getByDeveloper(name);
+        return super.getResponse(result);
     }
 }
