@@ -14,14 +14,14 @@ import java.util.List;
 @Repository
 public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
 
-    VideoGame findByTitle(final String title);
+    VideoGame findByTitleContainsIgnoreCase(final String title);
 
     @Query("SELECT v FROM VideoGame v WHERE YEAR(v.releaseDate) = :year")
     List<VideoGame> findByReleaseYear(@Param("year") final int year);
 
-    List<VideoGame> findByGenresIs(final Genre genre);
+    List<VideoGame> findByGenresContains(final Genre genre);
 
-    List<VideoGame> findByPlatformsIs(final Platform platform);
+    List<VideoGame> findByPlatformsContains(final Platform platform);
 
-    List<VideoGame> findByDevelopersIs(final Developer developer);
+    List<VideoGame> findByDevelopersContains(final Developer developer);
 }

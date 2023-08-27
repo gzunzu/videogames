@@ -20,30 +20,41 @@ public class AwardInstitutionServiceImpl implements AwardInstitutionService {
     final AwardInstitutionMapper awardInstitutionMapper;
 
     @Override
-    public List<AwardInstitution> getAll() {
-        return this.awardInstitutionRepository.findAll();
+    public List<AwardInstitutionDTO> getAll() {
+        final List<AwardInstitution> awardInstitutions = this.awardInstitutionRepository.findAll();
+
+        return this.awardInstitutionMapper.toDto().apply(awardInstitutions);
     }
 
     @Override
-    public AwardInstitution getById(final long id) {
-        return this.awardInstitutionRepository.findById(id)
+    public AwardInstitutionDTO getById(final long id) {
+        final AwardInstitution awardInstitution = this.awardInstitutionRepository.findById(id)
                 .orElse(null);
+
+        return this.awardInstitutionMapper.toDto(awardInstitution);
     }
 
     @Override
-    public AwardInstitution getByName(final String name) {
-        return this.awardInstitutionRepository.findByNameEqualsIgnoreCase(name);
+    public AwardInstitutionDTO getByName(final String name) {
+        final AwardInstitution awardInstitution = this.awardInstitutionRepository.findByNameContainsIgnoreCase(name);
+
+        return this.awardInstitutionMapper.toDto(awardInstitution);
     }
 
     @Override
-    public AwardInstitution insert(final AwardInstitutionDTO awardInstitutionDTO) {
+    public AwardInstitutionDTO insert(final AwardInstitutionDTO awardInstitutionDTO) {
         final AwardInstitution awardInstitution = this.awardInstitutionMapper.fromDto(awardInstitutionDTO);
-        return this.awardInstitutionRepository.save(awardInstitution);
+        final AwardInstitution result = this.awardInstitutionRepository.save(awardInstitution);
+
+        return this.awardInstitutionMapper.toDto(result);
     }
 
     @Override
-    public AwardInstitution update(final AwardInstitution awardInstitution) {
-        return this.awardInstitutionRepository.save(awardInstitution);
+    public AwardInstitutionDTO update(final AwardInstitutionDTO awardInstitutionDTO) {
+        final AwardInstitution awardInstitution = this.awardInstitutionMapper.fromDto(awardInstitutionDTO);
+        final AwardInstitution result = this.awardInstitutionRepository.save(awardInstitution);
+
+        return this.awardInstitutionMapper.toDto(result);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class AwardCategoryMapperImpl implements AwardCategoryMapper {
             return null;
         }
 
-        final AwardInstitution institution = this.awardInstitutionRepository.findByNameEqualsIgnoreCase(awardCategoryDTO.getInstitution());
+        final AwardInstitution institution = this.awardInstitutionRepository.findByNameContainsIgnoreCase(awardCategoryDTO.getInstitution());
 
         return AwardCategory.builder()
                 .id(awardCategoryDTO.getId())

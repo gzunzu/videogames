@@ -26,16 +26,20 @@ public class NominationMapperImpl implements NominationMapper {
             return null;
         }
 
-        final AwardCategory awardCategory = this.awardCategoryRepository.findByNameEqualsIgnoreCase(nominationDTO.getCategory().getName());
-
-        final VideoGame videoGame = this.videoGameRepository.findById(nominationDTO.getVideGameId())
+        final AwardCategory awardCategory = this.awardCategoryRepository.findByInstitutionNameContainsIgnoreCaseAndNameContainsIgnoreCase(
+                        nominationDTO.getCategory().getInstitution(),
+                        nominationDTO.getCategory().getName())
+                .stream()
+                .findAny()
                 .orElse(null);
+
+        final VideoGame videoGame = this.videoGameRepository.findByTitleContainsIgnoreCase(nominationDTO.getVideoGame());
 
         return Nomination.builder()
                 .id(nominationDTO.getId())
                 .category(awardCategory)
                 .videoGame(videoGame)
-                .win(nominationDTO.getWin())
+                .winner(nominationDTO.getWinner())
                 .date(nominationDTO.getDate())
                 .build();
     }
@@ -51,8 +55,8 @@ public class NominationMapperImpl implements NominationMapper {
         return NominationDTO.builder()
                 .id(nomination.getId())
                 .category(category)
-                .videGameId(nomination.getVideoGame().getId())
-                .win(nomination.getWin())
+                .videoGame(nomination.getVideoGame().getTitle())
+                .winner(nomination.getWinner())
                 .date(nomination.getDate())
                 .build();
     }

@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,12 +30,12 @@ public class VideoGameServiceImpl implements VideoGameService {
     public List<VideoGameDTO> getAll() {
         List<VideoGame> videoGames = this.videoGameRepository.findAll();
 
-        return this.fromVideoGameList(videoGames);
+        return this.videoGameMapper.toDto().apply(videoGames);
     }
 
     @Override
     public VideoGameDTO getByTitle(final String title) {
-        final VideoGame videoGame = this.videoGameRepository.findByTitle(title);
+        final VideoGame videoGame = this.videoGameRepository.findByTitleContainsIgnoreCase(title);
 
         return this.videoGameMapper.toDto(videoGame);
     }
@@ -45,36 +44,30 @@ public class VideoGameServiceImpl implements VideoGameService {
     public List<VideoGameDTO> getByReleaseYear(final int year) {
         final List<VideoGame> videoGames = this.videoGameRepository.findByReleaseYear(year);
 
-        return this.fromVideoGameList(videoGames);
+        return this.videoGameMapper.toDto().apply(videoGames);
     }
 
     @Override
     public List<VideoGameDTO> getByGenre(final String name) {
         final Genre genre = this.genreRepository.findByNameEqualsIgnoreCase(name);
-        final List<VideoGame> videoGames = this.videoGameRepository.findByGenresIs(genre);
+        final List<VideoGame> videoGames = this.videoGameRepository.findByGenresContains(genre);
 
-        return this.fromVideoGameList(videoGames);
+        return this.videoGameMapper.toDto().apply(videoGames);
     }
 
     @Override
     public List<VideoGameDTO> getByPlatform(final String name) {
         final Platform platform = this.platformRepository.findByNameEqualsIgnoreCase(name);
-        final List<VideoGame> videoGames = this.videoGameRepository.findByPlatformsIs(platform);
+        final List<VideoGame> videoGames = this.videoGameRepository.findByPlatformsContains(platform);
 
-        return this.fromVideoGameList(videoGames);
+        return this.videoGameMapper.toDto().apply(videoGames);
     }
 
     @Override
     public List<VideoGameDTO> getByDeveloper(final String name) {
         final Developer developer = this.developerRepository.findByNameEqualsIgnoreCase(name);
-        List<VideoGame> videoGames = this.videoGameRepository.findByDevelopersIs(developer);
+        List<VideoGame> videoGames = this.videoGameRepository.findByDevelopersContains(developer);
 
-        return this.fromVideoGameList(videoGames);
-    }
-
-    private List<VideoGameDTO> fromVideoGameList(final List<VideoGame> videoGames) {
-        return videoGames.stream()
-                .map(this.videoGameMapper::toDto)
-                .collect(Collectors.toList());
+        return this.videoGameMapper.toDto().apply(videoGames);
     }
 }

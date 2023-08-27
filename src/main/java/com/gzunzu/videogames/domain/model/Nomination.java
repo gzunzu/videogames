@@ -41,7 +41,7 @@ public class Nomination implements Serializable {
     @JoinColumn(name = "FK_VIDEOGAME", referencedColumnName = "ID")
     private VideoGame videoGame;
 
-    private Boolean win;
+    private Boolean winner;
 
     private LocalDate date;
 }

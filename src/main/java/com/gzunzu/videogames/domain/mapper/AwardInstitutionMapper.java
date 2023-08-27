@@ -6,7 +6,9 @@ import com.gzunzu.videogames.domain.model.AwardInstitution;
 
 public interface AwardInstitutionMapper extends ModelMapper<AwardInstitution, AwardInstitutionDTO> {
 
+    @Override
     AwardInstitutionDTO toDto(final AwardInstitution awardInstitution);
 
+    @Override
     AwardInstitution fromDto(final AwardInstitutionDTO awardInstitutionDTO);
 }
