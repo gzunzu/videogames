@@ -28,7 +28,7 @@ public class Developer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "DEVELOPER_ID_GENERATOR")
-    private long id;
+    private Long id;
 
     private String name;
 }

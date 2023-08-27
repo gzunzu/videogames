@@ -52,9 +52,9 @@ public class NominationController extends BaseController<NominationDTO> {
     }
 
     @GetMapping(name = "Get all nominations by video game title",
-            value = "/videogame")
-    public ResponseEntity<List<NominationDTO>> getByVideoGameTitle(@RequestParam(value = "title") final String title) {
-        final List<NominationDTO> result = this.nominationService.getByVideoGameTitle(title);
+            value = "/videogame/{videoGameId}")
+    public ResponseEntity<List<NominationDTO>> getByVideoGameId(@PathVariable(value = "videoGameId") final Long videoGameId) {
+        final List<NominationDTO> result = this.nominationService.getByVideoGameId(videoGameId);
         return super.getResponse(result);
     }
 

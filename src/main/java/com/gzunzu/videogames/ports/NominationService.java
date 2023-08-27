@@ -14,11 +14,13 @@ public interface NominationService {
 
     List<NominationDTO> getByInstitutionNameAndCategoryName(final String institution, final String category);
 
-    List<NominationDTO> getByVideoGameTitle(final String title);
+    List<NominationDTO> getByVideoGameId(final Long videoGameId);
 
     NominationDTO insert(final NominationDTO nominationDTO);
 
     NominationDTO update(final NominationDTO nominationDTO);
 
     boolean delete(final Long id);
+
+    void deleteByVideoGameId(final Long videoGameId);
 }

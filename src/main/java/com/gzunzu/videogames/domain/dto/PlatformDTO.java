@@ -16,6 +16,6 @@ public class PlatformDTO implements Serializable {
     private static final long serialVersionUID = -8690887009976218446L;
 
     @JsonIgnore
-    private long id;
+    private Long id;
     private String name;
 }

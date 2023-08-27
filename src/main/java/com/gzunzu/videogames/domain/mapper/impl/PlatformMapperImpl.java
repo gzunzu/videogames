@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class PlatformMapperImpl implements PlatformMapper {
 
     @Override
-    public PlatformDTO toDto(Platform platform) {
+    public PlatformDTO toDto(final Platform platform) {
         if (platform == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class PlatformMapperImpl implements PlatformMapper {
     }
 
     @Override
-    public Platform fromDto(PlatformDTO platformDTO) {
+    public Platform fromDto(final PlatformDTO platformDTO) {
         if (platformDTO == null) {
             return null;
         }

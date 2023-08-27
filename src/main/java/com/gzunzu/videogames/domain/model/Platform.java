@@ -28,7 +28,7 @@ public class Platform implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "PLATFORM_ID_GENERATOR")
-    private long id;
+    private Long id;
 
     private String name;
 }

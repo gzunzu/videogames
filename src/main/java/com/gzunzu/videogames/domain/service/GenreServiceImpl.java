@@ -36,7 +36,8 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDTO getByName(final String name) {
-        final Genre genre = this.genreRepository.findByNameEqualsIgnoreCase(name);
+        final Genre genre = this.genreRepository.findByNameEqualsIgnoreCase(name)
+                .orElse(null);
 
         return this.genreMapper.toDto(genre);
     }

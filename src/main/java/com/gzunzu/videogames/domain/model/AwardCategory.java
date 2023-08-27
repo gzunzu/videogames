@@ -30,7 +30,7 @@ public class AwardCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "AWARD_CATEGORY_ID_GENERATOR")
-    private long id;
+    private Long id;
 
     private String name;
 

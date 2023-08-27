@@ -35,7 +35,7 @@ public class VideoGame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "VIDEOGAME_ID_GENERATOR")
-    private long id;
+    private Long id;
 
     private String title;
 
@@ -50,10 +50,10 @@ public class VideoGame implements Serializable {
             joinColumns = @JoinColumn(name = "FK_VIDEOGAME", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "FK_GENRE", nullable = false)
     )
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Genre> genres;
 
-    @OneToMany(targetEntity = Nomination.class, mappedBy = "videoGame")
+    @OneToMany(targetEntity = Nomination.class, mappedBy = "videoGameId", cascade = CascadeType.PERSIST)
     private List<Nomination> nominations;
 
     @JoinTable(
@@ -61,7 +61,7 @@ public class VideoGame implements Serializable {
             joinColumns = @JoinColumn(name = "FK_VIDEOGAME", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "FK_DEVELOPER", nullable = false)
     )
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Developer> developers;
 
     @JoinTable(
@@ -69,6 +69,6 @@ public class VideoGame implements Serializable {
             joinColumns = @JoinColumn(name = "FK_VIDEOGAME", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "FK_PLATFORM", nullable = false)
     )
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Platform> platforms;
 }

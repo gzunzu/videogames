@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class AwardCategoryDTO implements Serializable {
     private static final long serialVersionUID = -6107308325321045825L;
 
-    private long id;
+    private Long id;
     private String name;
     private String institution;
 }

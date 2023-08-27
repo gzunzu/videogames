@@ -16,6 +16,6 @@ public class GenreDTO implements Serializable {
     private static final long serialVersionUID = -5233499640832300344L;
 
     @JsonIgnore
-    private long id;
+    private Long id;
     private String name;
 }

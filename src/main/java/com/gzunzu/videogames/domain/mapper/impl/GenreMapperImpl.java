@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class GenreMapperImpl implements GenreMapper {
 
     @Override
-    public GenreDTO toDto(Genre genre) {
+    public GenreDTO toDto(final Genre genre) {
         if (genre == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class GenreMapperImpl implements GenreMapper {
     }
 
     @Override
-    public Genre fromDto(GenreDTO genreDTO) {
+    public Genre fromDto(final GenreDTO genreDTO) {
         if (genreDTO == null) {
             return null;
         }

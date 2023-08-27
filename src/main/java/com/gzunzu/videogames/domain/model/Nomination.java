@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,15 +32,14 @@ public class Nomination implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "NOMINATION_ID_GENERATOR")
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "FK_AWARD_CATEGORY", referencedColumnName = "ID")
     private AwardCategory category;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_VIDEOGAME", referencedColumnName = "ID")
-    private VideoGame videoGame;
+    @Column(name = "FK_VIDEOGAME")
+    private Long videoGameId;
 
     private Boolean winner;
 

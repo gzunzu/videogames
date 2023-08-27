@@ -36,7 +36,8 @@ public class DeveloperServiceImpl implements DeveloperService {
 
     @Override
     public DeveloperDTO getByName(final String name) {
-        final Developer developer = this.developerRepository.findByNameEqualsIgnoreCase(name);
+        final Developer developer = this.developerRepository.findByNameEqualsIgnoreCase(name)
+                .orElse(null);
 
         return this.developerMapper.toDto(developer);
     }

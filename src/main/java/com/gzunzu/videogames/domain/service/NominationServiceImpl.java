@@ -7,6 +7,7 @@ import com.gzunzu.videogames.ports.NominationRepository;
 import com.gzunzu.videogames.ports.NominationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,8 +51,8 @@ public class NominationServiceImpl implements NominationService {
     }
 
     @Override
-    public List<NominationDTO> getByVideoGameTitle(final String title) {
-        final List<Nomination> nominations = this.nominationRepository.findAllByVideoGameTitleContainsIgnoreCase(title);
+    public List<NominationDTO> getByVideoGameId(final Long videoGameId) {
+        final List<Nomination> nominations = this.nominationRepository.findAllByVideoGameId(videoGameId);
 
         return this.nominationMapper.toDto().apply(nominations);
     }
@@ -79,6 +80,14 @@ public class NominationServiceImpl implements NominationService {
         } else {
             log.info("No nomination with ID {} found to delete.", id);
             return false;
+        }
+    }
+
+    @Override
+    public void deleteByVideoGameId(final Long videoGameId) {
+        final List<Nomination> nominations = this.nominationRepository.findAllByVideoGameId(videoGameId);
+        for (final Nomination nomination : CollectionUtils.emptyIfNull(nominations)) {
+            this.nominationRepository.deleteById(nomination.getId());
         }
     }
 }

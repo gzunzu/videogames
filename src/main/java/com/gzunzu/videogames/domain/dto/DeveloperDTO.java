@@ -14,6 +14,6 @@ import java.io.Serializable;
 public class DeveloperDTO implements Serializable {
     private static final long serialVersionUID = 7180268093416283160L;
 
-    private long id;
+    private Long id;
     private String name;
 }

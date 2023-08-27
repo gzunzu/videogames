@@ -13,5 +13,5 @@ public interface NominationRepository extends JpaRepository<Nomination, Long> {
 
     List<Nomination> findAllByCategoryInstitutionNameContainsIgnoreCase(final String institution);
 
-    List<Nomination> findAllByVideoGameTitleContainsIgnoreCase(final String title);
+    List<Nomination> findAllByVideoGameId(final Long videoGameId);
 }

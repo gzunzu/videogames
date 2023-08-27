@@ -12,11 +12,14 @@ import com.gzunzu.videogames.domain.model.VideoGame;
 import com.gzunzu.videogames.ports.DeveloperRepository;
 import com.gzunzu.videogames.ports.GenreRepository;
 import com.gzunzu.videogames.ports.PlatformRepository;
+import com.gzunzu.videogames.ports.VideoGameRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 public class VideoGameMapperImpl implements VideoGameMapper {
 
     private final NominationMapper nominationMapper;
+    private final VideoGameRepository videoGameRepository;
     private final GenreRepository genreRepository;
     private final PlatformRepository platformRepository;
     private final DeveloperRepository developerRepository;
@@ -69,24 +73,43 @@ public class VideoGameMapperImpl implements VideoGameMapper {
             return null;
         }
 
+        final Long id = videoGameDTO.getId() != null ? videoGameDTO.getId() :
+                this.videoGameRepository.findByTitleContainsIgnoreCase(videoGameDTO.getTitle()).stream()
+                        .filter((VideoGame videoGame) -> videoGame.getReleaseDate().equals(videoGameDTO.getReleaseDate()))
+                        .map(VideoGame::getId)
+                        .findAny()
+                        .orElse(null);
+
         final List<Genre> genres = CollectionUtils.emptyIfNull(videoGameDTO.getGenres()).stream()
                 .map(this.genreRepository::findByNameEqualsIgnoreCase)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
 
         final List<Developer> developers = CollectionUtils.emptyIfNull(videoGameDTO.getDevelopers()).stream()
                 .map(this.developerRepository::findByNameEqualsIgnoreCase)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
 
         final List<Platform> platforms = CollectionUtils.emptyIfNull(videoGameDTO.getPlatforms()).stream()
                 .map(this.platformRepository::findByNameEqualsIgnoreCase)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
 
         final List<Nomination> nominations = CollectionUtils.emptyIfNull(videoGameDTO.getNominations()).stream()
                 .map(this.nominationMapper::fromDto)
+                .filter(Objects::nonNull)
+                .peek((Nomination nomination) -> {
+                    if (nomination.getVideoGameId() == null) {
+                        nomination.setVideoGameId(id);
+                    }
+                })
                 .collect(Collectors.toList());
 
         return VideoGame.builder()
-                .id(videoGameDTO.getId())
+                .id(id)
                 .title(videoGameDTO.getTitle())
                 .releaseDate(videoGameDTO.getReleaseDate())
                 .estimatedHours(videoGameDTO.getEstimatedHours())

@@ -1,6 +1,5 @@
 package com.gzunzu.videogames.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +16,7 @@ import java.util.List;
 public class VideoGameDTO implements Serializable {
     private static final long serialVersionUID = -5089629882251828777L;
 
-    @JsonIgnore
-    private long id;
+    private Long id;
     private String title;
     private LocalDate releaseDate;
     private float estimatedHours;

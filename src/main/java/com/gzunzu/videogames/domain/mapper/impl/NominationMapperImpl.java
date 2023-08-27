@@ -6,9 +6,7 @@ import com.gzunzu.videogames.domain.mapper.AwardCategoryMapper;
 import com.gzunzu.videogames.domain.mapper.NominationMapper;
 import com.gzunzu.videogames.domain.model.AwardCategory;
 import com.gzunzu.videogames.domain.model.Nomination;
-import com.gzunzu.videogames.domain.model.VideoGame;
 import com.gzunzu.videogames.ports.AwardCategoryRepository;
-import com.gzunzu.videogames.ports.VideoGameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +16,10 @@ public class NominationMapperImpl implements NominationMapper {
 
     private final AwardCategoryRepository awardCategoryRepository;
     private final AwardCategoryMapper awardCategoryMapper;
-    private final VideoGameRepository videoGameRepository;
 
     @Override
-    public Nomination fromDto(NominationDTO nominationDTO) {
-        if (nominationDTO == null) {
+    public Nomination fromDto(final NominationDTO nominationDTO) {
+        if (nominationDTO == null || nominationDTO.getVideoGameId() == null) {
             return null;
         }
 
@@ -33,19 +30,17 @@ public class NominationMapperImpl implements NominationMapper {
                 .findAny()
                 .orElse(null);
 
-        final VideoGame videoGame = this.videoGameRepository.findByTitleContainsIgnoreCase(nominationDTO.getVideoGame());
-
         return Nomination.builder()
                 .id(nominationDTO.getId())
                 .category(awardCategory)
-                .videoGame(videoGame)
+                .videoGameId(nominationDTO.getVideoGameId())
                 .winner(nominationDTO.getWinner())
                 .date(nominationDTO.getDate())
                 .build();
     }
 
     @Override
-    public NominationDTO toDto(Nomination nomination) {
+    public NominationDTO toDto(final Nomination nomination) {
         if (nomination == null) {
             return null;
         }
@@ -55,7 +50,7 @@ public class NominationMapperImpl implements NominationMapper {
         return NominationDTO.builder()
                 .id(nomination.getId())
                 .category(category)
-                .videoGame(nomination.getVideoGame().getTitle())
+                .videoGameId(nomination.getVideoGameId())
                 .winner(nomination.getWinner())
                 .date(nomination.getDate())
                 .build();

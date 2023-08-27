@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class AwardInstitutionMapperImpl implements AwardInstitutionMapper {
 
     @Override
-    public AwardInstitutionDTO toDto(AwardInstitution awardInstitution) {
+    public AwardInstitutionDTO toDto(final AwardInstitution awardInstitution) {
         if (awardInstitution == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class AwardInstitutionMapperImpl implements AwardInstitutionMapper {
     }
 
     @Override
-    public AwardInstitution fromDto(AwardInstitutionDTO awardInstitutionDTO) {
+    public AwardInstitution fromDto(final AwardInstitutionDTO awardInstitutionDTO) {
         if (awardInstitutionDTO == null) {
             return null;
         }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class DeveloperMapperImpl implements DeveloperMapper {
 
     @Override
-    public DeveloperDTO toDto(Developer developer) {
+    public DeveloperDTO toDto(final Developer developer) {
         if (developer == null) {
             return null;
         }
@@ -23,7 +23,7 @@ public class DeveloperMapperImpl implements DeveloperMapper {
     }
 
     @Override
-    public Developer fromDto(DeveloperDTO developerDTO) {
+    public Developer fromDto(final DeveloperDTO developerDTO) {
         if (developerDTO == null) {
             return null;
         }

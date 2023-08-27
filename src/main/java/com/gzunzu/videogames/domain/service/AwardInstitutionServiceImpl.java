@@ -36,7 +36,8 @@ public class AwardInstitutionServiceImpl implements AwardInstitutionService {
 
     @Override
     public AwardInstitutionDTO getByName(final String name) {
-        final AwardInstitution awardInstitution = this.awardInstitutionRepository.findByNameContainsIgnoreCase(name);
+        final AwardInstitution awardInstitution = this.awardInstitutionRepository.findByNameContainsIgnoreCase(name)
+                .orElse(null);
 
         return this.awardInstitutionMapper.toDto(awardInstitution);
     }

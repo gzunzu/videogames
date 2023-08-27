@@ -15,9 +15,9 @@ import java.time.LocalDate;
 public class NominationDTO implements Serializable {
     private static final long serialVersionUID = -5912069179572717744L;
 
-    private long id;
+    private Long id;
     private AwardCategoryDTO category;
-    private String videoGame;
+    private Long videoGameId;
     private Boolean winner;
     private LocalDate date;
 }

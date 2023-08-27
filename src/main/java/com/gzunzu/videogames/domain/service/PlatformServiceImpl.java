@@ -36,7 +36,8 @@ public class PlatformServiceImpl implements PlatformService {
 
     @Override
     public PlatformDTO getByName(final String name) {
-        Platform platform = this.platformRepository.findByNameEqualsIgnoreCase(name);
+        final Platform platform = this.platformRepository.findByNameEqualsIgnoreCase(name)
+                .orElse(null);
 
         return this.platformMapper.toDto(platform);
     }

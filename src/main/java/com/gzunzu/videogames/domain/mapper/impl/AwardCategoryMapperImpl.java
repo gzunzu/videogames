@@ -15,7 +15,7 @@ public class AwardCategoryMapperImpl implements AwardCategoryMapper {
     private final AwardInstitutionRepository awardInstitutionRepository;
 
     @Override
-    public AwardCategoryDTO toDto(AwardCategory awardCategory) {
+    public AwardCategoryDTO toDto(final AwardCategory awardCategory) {
         if (awardCategory == null) {
             return null;
         }
@@ -28,12 +28,13 @@ public class AwardCategoryMapperImpl implements AwardCategoryMapper {
     }
 
     @Override
-    public AwardCategory fromDto(AwardCategoryDTO awardCategoryDTO) {
+    public AwardCategory fromDto(final AwardCategoryDTO awardCategoryDTO) {
         if (awardCategoryDTO == null) {
             return null;
         }
 
-        final AwardInstitution institution = this.awardInstitutionRepository.findByNameContainsIgnoreCase(awardCategoryDTO.getInstitution());
+        final AwardInstitution institution = this.awardInstitutionRepository.findByNameContainsIgnoreCase(awardCategoryDTO.getInstitution())
+                .orElse(null);
 
         return AwardCategory.builder()
                 .id(awardCategoryDTO.getId())

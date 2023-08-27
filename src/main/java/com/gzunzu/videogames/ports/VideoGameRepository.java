@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
 
-    VideoGame findByTitleContainsIgnoreCase(final String title);
+    List<VideoGame> findByTitleContainsIgnoreCase(final String title);
 
     @Query("SELECT v FROM VideoGame v WHERE YEAR(v.releaseDate) = :year")
     List<VideoGame> findByReleaseYear(@Param("year") final int year);
