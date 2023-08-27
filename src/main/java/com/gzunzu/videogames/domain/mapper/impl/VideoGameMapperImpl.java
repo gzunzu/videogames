@@ -102,8 +102,8 @@ public class VideoGameMapperImpl implements VideoGameMapper {
                 .map(this.nominationMapper::fromDto)
                 .filter(Objects::nonNull)
                 .peek((Nomination nomination) -> {
-                    if (nomination.getVideoGameId() == null) {
-                        nomination.setVideoGameId(id);
+                    if (nomination.getVideoGame() == null || nomination.getVideoGame().getId() == null) {
+                        nomination.setVideoGame(VideoGame.builder().id(id).build());
                     }
                 })
                 .collect(Collectors.toList());

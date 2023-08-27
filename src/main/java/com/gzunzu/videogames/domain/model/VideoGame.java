@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +54,10 @@ public class VideoGame implements Serializable {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Genre> genres;
 
-    @OneToMany(targetEntity = Nomination.class, mappedBy = "videoGameId", cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = Nomination.class,
+            mappedBy = "videoGame",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.EAGER)
     private List<Nomination> nominations;
 
     @JoinTable(

@@ -86,8 +86,7 @@ public class NominationServiceImpl implements NominationService {
     @Override
     public void deleteByVideoGameId(final Long videoGameId) {
         final List<Nomination> nominations = this.nominationRepository.findAllByVideoGameId(videoGameId);
-        for (final Nomination nomination : CollectionUtils.emptyIfNull(nominations)) {
-            this.nominationRepository.deleteById(nomination.getId());
-        }
+
+        this.nominationRepository.deleteAll(CollectionUtils.emptyIfNull(nominations));
     }
 }

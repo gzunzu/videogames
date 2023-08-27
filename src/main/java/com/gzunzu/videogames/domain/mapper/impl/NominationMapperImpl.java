@@ -6,6 +6,7 @@ import com.gzunzu.videogames.domain.mapper.AwardCategoryMapper;
 import com.gzunzu.videogames.domain.mapper.NominationMapper;
 import com.gzunzu.videogames.domain.model.AwardCategory;
 import com.gzunzu.videogames.domain.model.Nomination;
+import com.gzunzu.videogames.domain.model.VideoGame;
 import com.gzunzu.videogames.ports.AwardCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class NominationMapperImpl implements NominationMapper {
         return Nomination.builder()
                 .id(nominationDTO.getId())
                 .category(awardCategory)
-                .videoGameId(nominationDTO.getVideoGameId())
+                .videoGame(VideoGame.builder().id(nominationDTO.getVideoGameId()).build())
                 .winner(nominationDTO.getWinner())
                 .date(nominationDTO.getDate())
                 .build();
@@ -50,7 +51,7 @@ public class NominationMapperImpl implements NominationMapper {
         return NominationDTO.builder()
                 .id(nomination.getId())
                 .category(category)
-                .videoGameId(nomination.getVideoGameId())
+                .videoGameId(nomination.getVideoGame().getId())
                 .winner(nomination.getWinner())
                 .date(nomination.getDate())
                 .build();

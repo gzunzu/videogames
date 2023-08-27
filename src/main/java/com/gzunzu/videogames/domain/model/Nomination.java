@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,8 +38,9 @@ public class Nomination implements Serializable {
     @JoinColumn(name = "FK_AWARD_CATEGORY", referencedColumnName = "ID")
     private AwardCategory category;
 
-    @Column(name = "FK_VIDEOGAME")
-    private Long videoGameId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FK_VIDEOGAME", referencedColumnName = "ID")
+    private VideoGame videoGame;
 
     private Boolean winner;
 
